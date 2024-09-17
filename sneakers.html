@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boots-Oliax Store</title>
+    <style>
+        header {
+            background-color: #333;
+            padding: 15px;
+            color: white;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            margin: 0;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .navbar a {
+            margin-left: 15px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .cart i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        input {
+            display: block;
+            width: 90%;
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .close-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            float: right;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+        }
+
+        .modal h2 {
+            margin-bottom: 15px;
+        }
+
+        .user-profile {
+            display: none;
+            align-items: center;
+        }
+        
+        .user-profile img {
+            width: 37px; /* Adjust the width as needed */
+            height: 37px; /* Adjust the height as needed */
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .user-profile span {
+            color: white;
+        }
+        #user-name {
+            font-weight: bold;
+        }
+        
+    </style>
+    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html"><h1>Oliax</h1></a>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for products...">
+                <button>Search</button>
+            </div>
+            <div class="navbar">
+                <a href="/index.html">Home</a>
+                <a href="/shirts.html">T-Shirts</a>
+                
+                <a href="/sneakers.html">Boots</a>
+                <a href="/shoes.html">Shoes</a>
+            </div>
+            <div class="cart">
+                <a href="cart.html">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </div>
+            <div class="user-actions">
+                <button onclick="openModal('registration')">Create Account</button>
+                <button onclick="openModal('signin')">Sign In</button>
+            </div>
+            <div class="user-profile" id="user-profile">
+                <img src="./pic.jpg" alt="User Icon">
+                <span id="user-name">John Doe</span>
+                <button onclick="logoutUser()">Logout</button>
+            </div>
+        </div>
+    </header>
+    <!-- Registration Modal -->
+    <div id="registration-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('registration-modal')">X</button>
+            <h2>Create Account</h2>
+            <input type="text" id="first-name" placeholder="First Name" required>
+            <input type="text" id="last-name" placeholder="Last Name" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="tel" id="phone" placeholder="Phone Number" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button onclick="registerUser()">Register</button>
+            <p id="registration-error" class="error-message"></p>
+        </div>
+    </div>
+    
+    <!-- Sign-in Modal -->
+    <div id="signin-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('signin-modal')">X</button>
+            <h2>Sign In</h2>
+            <input type="email" id="signin-email" placeholder="Email" required>
+            <input type="password" id="signin-password" placeholder="Password" required>
+            <button onclick="signInUser()">Sign In</button>
+            <p id="signin-error" class="error-message"></p>
+        </div>
+    </div>
+
+    <!-- Main Section -->
+    <main>
+      
+        <div class="container">
+        <!-- Product Grid Section -->
+        <section class="products-grid">
+    <!-- Product 1 -->
+    <div class="product-card">
+        <div class="product-image-container">
+            <!-- Default and hover images -->
+            <img src="./boots.avif" alt="Oliax Groove Low Top Sneakers" class="product-image">
+            <img src="./boots1.avif" alt="Oliax Groove Low Top Sneakers" class="product-image-hover">
+            <button class="add-to-cart-btn" onclick="addToCart('Oliax Groove Low Top Sneakers', 1999)">Add to Cart</button>
+        </div>
+        <h4>Oliax Groove Low Top Sneakers</h4>
+        <p>Rs. 1,999.00</p>
+        <button class="whatsapp-btn" onclick="buyNowOnWhatsApp('Oliax Groove Low Top Sneakers', 1999)">Buy Now on WhatsApp</button>
+    </div>
+    
+
+    <!-- Product 2 (Added hover functionality here as well) -->
+    <div class="product-card">
+        <div class="product-image-container">
+            <img src="./boot3.avif" alt="Oliax Manhattan Sneakers" class="product-image">
+            <img src="./boot4.avif" alt="Oliax Manhattan Sneakers" class="product-image-hover">
+            <button class="add-to-cart-btn" onclick="addToCart('Oliax Groove Low Top Sneakers', 1999)">Add to Cart</button>
+        </div>
+        <h4>Oliax Manhattan Sneakers</h4>
+        <p>Rs. 2,499.00</p>
+        <button class="whatsapp-btn" onclick="buyNowOnWhatsApp('Oliax Manhattan Sneakers', 2499)">Buy Now on WhatsApp</button>
+    </div>
+
+     <!-- Product 2 (Added hover functionality here as well) -->
+     <div class="product-card">
+        <div class="product-image-container">
+            <img src="./boot5.avif" alt="Oliax Manhattan Sneakers" class="product-image">
+            <img src="./boot6.avif" alt="Oliax Manhattan Sneakers" class="product-image-hover">
+            <button class="add-to-cart-btn" onclick="addToCart('Oliax Groove Low Top Sneakers', 1999)">Add to Cart</button>
+        </div>
+        <h4>Oliax Manhattan Sneakers</h4>
+        <p>Rs. 2,499.00</p>
+    <button class="whatsapp-btn" onclick="buyNowOnWhatsApp('Oliax Manhattan Sneakers', 2499)">Buy Now on WhatsApp</button>
+    </div>
+
+    
+
+    <!-- Add more product cards here -->
+</section>
+</div>
+ 
+
+    </main>
+
+    <!-- Cart Section -->
+    <section class="cart-container" id="cart-container" style="display: none;">
+        <h3>Your Cart</h3>
+        <ul id="cart-items"></ul>
+        <button id="checkout-btn">Buy Now on WhatsApp</button>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Logo Section -->
+                <div class="footer-logo">
+                    <img src="./logo.png" alt="Logo" class="footer-img">
+                </div>
+    
+                <!-- Navigation Links -->
+                <div class="footer-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shirts.html">T-Shirts</a></li>
+                        <li><a href="sneakers.html">Boots</a></li>
+                        <li><a href="shoes.html">Shoes</a></li>
+                       
+                    </ul>
+                    <!-- Social Icons -->
+                    <div class="social-icons">
+                        <a href="https://wa.link/h1935h" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://mail.google.com/mail/" target="_blank"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+    
+                <!-- Map and Address -->
+                <div class="footer-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3932.46233985586!2d76.72351987507453!3d9.726846690365058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b07cc024cb7c83f%3A0xc8944aaebb3ba492!2sSt.%20Joseph&#39;s%20College%20of%20Engineering%20and%20Technology%2C%20Palai!5e0!3m2!1sen!2sin!4v1718524825457!5m2!1sen!2sin" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <p  class="text">PPHG+4GR, Bharananganam Pravithanam Road Kottayam, Palai, Choonducherry, Kerala 686579</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="app.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
